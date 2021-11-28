@@ -27,7 +27,6 @@ app.get("/app/", (req, res, next) => {
 app.post("/app/new", (req, res) => {
 	const stmt = db.prepare("INSERT INTO userinfo (user, pass) VALUES (?, ?)");
 	const info = stmt.run(req.body.user, md5(req.body.pass))
-	console.log({"id":3,"user":"newtest","pass":"38a7744f5523335db845ff1976bf4747"});
 	res.status(201).send({message: info.changes + " record created: ID " + info.lastInsertRowid + " (201)"});
 });
 
@@ -41,7 +40,7 @@ app.get("/app/users", (req, res) => {
 app.get("/app/user/:id", (req, res) => {
 	const stmt = db.prepare("SELECT * FROM userinfo WHERE id = ?");
 	const info = stmt.run(req.params.id)
-	var o = {id:parseInt(req.params.id),user:info["user"],pass:info["pass"],}
+	var o = {id:parseInt(req.params.id),user:info["user"],pass:info["pass"]}
 	res.status(200).json(o);
 });
 
